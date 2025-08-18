@@ -38,23 +38,23 @@
       background: #050033;
       color: #fff;
       display: block;
-      width: fit-content;       /* shrink to text */
+      width: fit-content;       
       max-width: 40%;
       word-wrap: break-word;
       padding: 0.6rem 1rem;
       border-radius: 12px;
-      margin-left: auto;        /* push fully right */
-      margin-right: 15%;        /* add right margin gap */
+      margin-left: auto;        
+      margin-right: 15%;        
     }
     .bot {
       background: #050033;
       color: #fff;
       margin-right: auto;
-      display: inline-block;  /* shrink to fit text */
-      max-width: 40%;         /* but don't exceed 40% of chat area */
-      word-wrap: break-word;  /* wrap long text */
-      padding: 0.6rem 1rem;   /* spacing inside bubble */
-      margin-left: 15%;        /* add right margin gap */
+      display: inline-block;  
+      max-width: 40%;         
+      word-wrap: break-word;  
+      padding: 0.6rem 1rem;   
+      margin-left: 15%;       
       text-align: left;
     }
     #inputArea {
@@ -116,7 +116,6 @@
         await fetch(BACKEND_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-         // body: JSON.stringify({ message: "" })  
         });
         console.log("Backend wake-up ping sent!");
       } catch (error) {
@@ -127,16 +126,13 @@
       const text = userInput.value.trim();
       if (!text) return;
 
-      // Disable send button
       sendBtn.disabled = true;
       sendBtn.innerText = "Sending...";
 
-      // Add user message
       addMessage(text, "user");
       userInput.value = "";
 
       try {
-        // Send request to backend
         const response = await fetch(BACKEND_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -155,7 +151,6 @@
         console.error("Error:", error);
       }
 
-      // Re-enable send button
       sendBtn.disabled = false;
       sendBtn.innerText = "Send";
     }
@@ -164,11 +159,9 @@
     userInput.addEventListener("keypress", e => {
       if (e.key === "Enter") {
         if (e.shiftKey) {
-          // Insert newline
           e.preventDefault();
           userInput.value += "\n";
         } else {
-          // Send message
           e.preventDefault();
           sendMessage();
         }
@@ -178,5 +171,6 @@
 </body>
 
 </html>
+
 
 
