@@ -42,13 +42,13 @@
       background: #050033;
       color: #fff;
       display: block;
-      width: fit-content;      
+      width: fit-content;       
       max-width: 40%;
       word-wrap: break-word;
       padding: 0.6rem 1rem;
       border-radius: 12px;
-      margin-left: auto;       
-      margin-right: 15%;       
+      margin-left: auto;        
+      margin-right: 15%;        
     }
     .bot {
       background: #050033;
@@ -72,13 +72,36 @@
       flex: 1;
       max-width: 45%;
       padding: 0.7rem;
-      border: none;
+      border: 2px solid #f1c40f;
       background-color: #050033;
       color: #fff;
       border-radius: 20px;
       outline: none;
     }
     @media (max-width: 700px) {
+      .user {
+        background: #050033;
+        color: #fff;
+        display: block;
+        width: fit-content;       
+        max-width: 80%;
+        word-wrap: break-word;
+        padding: 0.6rem 1rem;
+        border-radius: 12px;
+        margin-right: 0%;
+        margin-left: auto;        
+      }
+      .bot {
+        background: #050033;
+        color: #fff;
+        margin-right: auto;
+        display: inline-block;  
+        max-width: 80%;         
+        word-wrap: break-word;  
+        padding: 0.6rem 1rem;   
+        margin-left: 0%;
+        text-align: left;
+      }
       header.desktop {
         display: none;
       }
@@ -94,7 +117,7 @@
         flex: 1;
         max-width: 80%;
         padding: 0.7rem;
-        border: none;
+        border: 2px solid #f1c40f;
         background-color: #050033;
         color: #fff;
         border-radius: 20px;
