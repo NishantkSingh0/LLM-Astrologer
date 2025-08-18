@@ -8,10 +8,10 @@ import os
 
 load_dotenv()
 
-app = Flask(__name__)
+app=Flask(__name__)
 CORS(app)  
 
-client = Groq(api_key=os.getenv("Groq_API"))
+client=Groq(api_key=os.getenv("Groq_API"))
 
 @app.route("/")
 def home():
@@ -19,8 +19,8 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    data = request.get_json()
-    query = data.get("message", "")
+    data=request.get_json()
+    query=data.get("message", "")
     print('Received Query:', query)
 
     if not query:
@@ -29,7 +29,7 @@ def chat():
     memory=ChatMemory(SystemPrompt=f'You are AstroBot, a helpful astrology assistant. todays date is {date.today()}. dont introduce yourself again and again')
     memory.UserInp(query)
     try:
-        completion = client.chat.completions.create(
+        completion=client.chat.completions.create(
             model="meta-llama/llama-4-scout-17b-16e-instruct",
             messages=memory.get_context(),
             temperature=0.7,
@@ -37,7 +37,7 @@ def chat():
             stream=False
         )
 
-        response_text = completion.choices[0].message.content
+        response_text=completion.choices[0].message.content
         memory.BotResp(response_text)
         return jsonify({"response": response_text})
 
@@ -45,5 +45,6 @@ def chat():
         print(f"Error: {e}")
         return jsonify({"error": str(e)}), 500
 
-if __name__ == "__main__":
+if __name__=="__main__":
+
     app.run(host="0.0.0.0", port=5000, debug=True)
