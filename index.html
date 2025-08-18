@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroBot ✨</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #12172C;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #12172C;
+      color: #f1c40f;
+      font-size: 1.5rem;
+    }
+    #chatbox {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      color: #fff;
+    }
+    .message {
+      margin: 0.5rem 0;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      max-width: 70%;
+    }
+    .user {
+      background: #050033;
+      color: #fff;
+      display: block;
+      width: fit-content;       /* shrink to text */
+      max-width: 40%;
+      word-wrap: break-word;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      margin-left: auto;        /* push fully right */
+      margin-right: 15%;        /* add right margin gap */
+    }
+    .bot {
+      background: #050033;
+      color: #fff;
+      margin-right: auto;
+      display: inline-block;  /* shrink to fit text */
+      max-width: 40%;         /* but don't exceed 40% of chat area */
+      word-wrap: break-word;  /* wrap long text */
+      padding: 0.6rem 1rem;   /* spacing inside bubble */
+      margin-left: 15%;        /* add right margin gap */
+      text-align: left;
+    }
+    #inputArea {
+      display: flex;
+      padding: 1rem;
+      background: #12172C;
+      padding-bottom: 30px;
+      justify-content: center;
+    }
+    #userInput {
+      flex: 1;
+      max-width: 45%;
+      padding: 0.7rem;
+      border: none;
+      background-color: #050033;
+      color: #fff;
+      border-radius: 20px;
+      outline: none;
+    }
+    #sendBtn {
+      margin-left: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 20px;
+      background: #000000;
+      color: #fff;
+      cursor: pointer;
+    }
+    #sendBtn:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <header>🔮 AstroBot - Your Astrology Guide</header>
+  <div id="chatbox"></div>
+  <div id="inputArea">
+    <textarea id="userInput" placeholder="Ask about your stars..." rows="2"></textarea>
+      <button id="sendBtn">Send</button>
+    </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const BACKEND_URL = "http://localhost:5000/chat"; 
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+    window.addEventListener("load", async () => {
+      try {
+        await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+         // body: JSON.stringify({ message: "" })  
+        });
+        console.log("Backend wake-up ping sent!");
+      } catch (error) {
+        console.error("Wake-up failed:", error);
+      }
+    });
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      // Disable send button
+      sendBtn.disabled = true;
+      sendBtn.innerText = "Sending...";
+
+      // Add user message
+      addMessage(text, "user");
+      userInput.value = "";
+
+      try {
+        // Send request to backend
+        const response = await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text })
+        });
+
+        const data = await response.json();
+
+        if (data.response) {
+          addMessage(data.response, "bot");
+        } else if (data.error) {
+          addMessage("Error: " + data.error, "bot");
+        }
+      } catch (error) {
+        addMessage("Please wait for backend to wakeup...\n once it waked up you can chat without any delay", "bot");
+        console.error("Error:", error);
+      }
+
+      // Re-enable send button
+      sendBtn.disabled = false;
+      sendBtn.innerText = "Send";
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") {
+        if (e.shiftKey) {
+          // Insert newline
+          e.preventDefault();
+          userInput.value += "\n";
+        } else {
+          // Send message
+          e.preventDefault();
+          sendMessage();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
