@@ -1,7 +1,7 @@
 # 🔮 LLM Astrologer
 
 This project is an **LLM-Powered astrologer** built under selection task by **vedaz** organization. It predicts your **future plans** and provides **essential astrological details** in a conversational style.  
-
+<br>
 
 ## 🌟 Live Examples
 
@@ -24,8 +24,28 @@ User: Tell me something about my relationship path.
 LLM: You are likely to experience stronger emotional connections in the coming phase. Commitment and stability will gradually take center stage.
 ```
 ⚡ *The LLM is not a real astrologer — it blends language understanding with predictive-style responses for experimentation and fun.*  
+<br>
+## 🧠 Sliding Memory Algorithm
 
+To make conversations more natural, the bot uses a **sliding memory window**.  
+It remembers the **last 3 interactions (user + assistant pairs)**, which helps the LLM recall context like your name or previous questions.  
 
+### Example Conversation with Memory:
+```json
+[
+  {"role": "system", "content": "You are a Bot"},
+
+  {"role": "user", "content": "Hi there I am Nishant Singh"},  
+  {"role": "assistant", "content": "Hey Nishant, How are you"},  
+
+  {"role": "user", "content": "Who is the prime minister of India"},  
+  {"role": "assistant", "content": "Narendra Modi is current prime minister of India"},  
+
+  {"role": "user", "content": "What's my name"},  
+  {"role": "assistant", "content": "Your name is Nishant.. as of our previous conversation"}  
+]
+```
+<br>
 ## 🛠️ Tech Stack
 
 - **Python 3.10+**  
