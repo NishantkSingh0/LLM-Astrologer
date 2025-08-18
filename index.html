@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="N.png">
   <title>AstroBot ✨</title>
   <style>
@@ -15,12 +15,16 @@
       flex-direction: column;
       height: 100vh;
     }
-    header {
+    header.desktop{
+      display: block;
       text-align: center;
       padding: 1rem;
       background: #12172C;
       color: #f1c40f;
       font-size: 1.5rem;
+    }
+    header.mobile {
+      display: none;
     }
     #chatbox {
       flex: 1;
@@ -38,13 +42,13 @@
       background: #050033;
       color: #fff;
       display: block;
-      width: fit-content;       
+      width: fit-content;      
       max-width: 40%;
       word-wrap: break-word;
       padding: 0.6rem 1rem;
       border-radius: 12px;
-      margin-left: auto;        
-      margin-right: 15%;        
+      margin-left: auto;       
+      margin-right: 15%;       
     }
     .bot {
       background: #050033;
@@ -74,6 +78,29 @@
       border-radius: 20px;
       outline: none;
     }
+    @media (max-width: 700px) {
+      header.desktop {
+        display: none;
+      }
+      header.mobile {
+        display: block;
+        text-align: center;
+        padding: 1rem;
+        background: #12172C;
+        color: #f1c40f;
+        font-size: 1.5rem;
+      }
+      #userInput {
+        flex: 1;
+        max-width: 80%;
+        padding: 0.7rem;
+        border: none;
+        background-color: #050033;
+        color: #fff;
+        border-radius: 20px;
+        outline: none;
+      }
+    }
     #sendBtn {
       margin-left: 0.5rem;
       padding: 0.7rem 1.2rem;
@@ -90,7 +117,8 @@
   </style>
 </head>
 <body>
-  <header>🔮 AstroBot - Your Astrology Guide</header>
+  <header class="desktop">🔮 AstroBot - Your Astrology Guide</header>
+  <header class="mobile">🔮 Your Astrology Guide</header>
   <div id="chatbox"></div>
   <div id="inputArea">
     <textarea id="userInput" placeholder="Ask about your stars..." rows="2"></textarea>
@@ -169,8 +197,4 @@
     });
   </script>
 </body>
-
 </html>
-
-
-
