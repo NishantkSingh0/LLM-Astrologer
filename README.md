@@ -1,6 +1,9 @@
 # 🔮 LLM Astrologer
 
 This project is an **LLM-Powered astrologer** built under selection task by **vedaz** organization. It predicts your **future plans** and provides **essential astrological details** in a conversational style.  
+  
+`try live`: https://nishantksingh0.github.io/LLM-Astrologer/
+
 <br>
 
 ## 🌟 Live Examples
